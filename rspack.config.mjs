@@ -1,9 +1,10 @@
-
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { rspack } from "@rspack/core";
 import RefreshPlugin from "@rspack/plugin-react-refresh";
 import { withZephyr } from "zephyr-rspack-plugin";
+import { ModuleFederationPlugin } from '@module-federation/enhanced/rspack';
+
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const isDev = process.env.NODE_ENV === "development";
@@ -55,7 +56,22 @@ export default withZephyr()({
       }
     ]
   },
+  output: {
+    publicPath: 'http://localhost:8081/',
+    uniqueName: 'remote'
+  },
   plugins: [
+    new ModuleFederationPlugin({
+      name: 'remote',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './App': './src/App.jsx',
+      },
+      shared: {
+        react: { singleton: true, eager: true, requiredVersion: '^19.1.0' },
+        'react-dom': { singleton: true, eager: true, requiredVersion: '^19.1.0' }
+      }
+    }),
     new rspack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
     }),
