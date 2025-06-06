@@ -60,6 +60,12 @@ export default withZephyr()({
     publicPath: 'http://localhost:8081/',
     uniqueName: 'remote'
   },
+  devServer: {
+    port: 8081,
+    hot: true,
+    historyApiFallback: true,
+    allowedHosts: ['localhost', '127.0.0.1', '0.0.0.0']
+  },
   plugins: [
     new ModuleFederationPlugin({
       name: 'remote',
