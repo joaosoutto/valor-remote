@@ -5,8 +5,8 @@
     "name": "remote",
     "type": "app",
     "buildInfo": {
-      "buildVersion": "1.0.0",
-      "buildName": "valor-mf-remote"
+      "buildVersion": "1.0.1",
+      "buildName": "remote"
     },
     "remoteEntry": {
       "name": "remoteEntry.js",
